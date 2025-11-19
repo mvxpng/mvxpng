@@ -673,23 +673,23 @@
 
             <div class="section">
                 <h2>Project Overview</h2>
-                <p>This malware analysis sandbox provides a secure, isolated environment for examining suspicious software, understanding attack vectors, and developing defensive strategies. The system is built using virtualization technology to ensure complete containment of potentially dangerous code.</p>
-                <p>Our goal is to advance malware research while maintaining the highest safety standards and contributing to the broader cybersecurity community through educational content and tool demonstrations.</p>
+                <p>This malware analysis sandbox provides a secure, isolated environment for examining suspicious software, observing how they work, and developing defensive strategies. The system is built using virtualization technology to ensure complete containment of potentially dangerous code.</p>
+                <p>Our goal is to provide this workstation for ORTSOC students to develop cybersecurity skills relating to malware and defenses and contribute documentation and live videos.</p>
             </div>
 
             <div class="section">
                 <h2>Architecture</h2>
                 <h3>Virtualization Layer</h3>
-                <p>Built on VirtualBox/VMware with snapshotting capabilities for rapid environment restoration</p>
+                <p>Built on VirtualBox, using snapshots for rapid restoration to a clean slate.</p>
                 
                 <h3>Network Isolation</h3>
-                <p>Completely isolated virtual network with optional internet simulation using INetSim</p>
+                <p>Completely isolated virtual network with optional internet simulation using INetSim https://www.kali.org/tools/inetsim/</p>
                 
                 <h3>Analysis VMs</h3>
-                <p>Windows-based FLARE VM for Windows malware and Linux-based REMnux for multi-platform analysis</p>
+                <p>Windows 10 running with FlareVM for malware analysis tools, and Linux Ubuntu based REMnux, to study on multiple operating systems.</p>
                 
                 <h3>Monitoring Tools</h3>
-                <p>Process Monitor, Wireshark, API monitoring, and memory forensics tools</p>
+                <p>Process Monitor, Wireshark, API monitoring, memory forensics tools, and more.</p>
             </div>
 
             <div class="section">
@@ -697,9 +697,10 @@
                 <ul>
                     <li>All malware samples are executed only in isolated virtual machines</li>
                     <li>No direct network access to host systems or external networks</li>
-                    <li>Regular snapshots allow instant rollback to clean states</li>
-                    <li>All analysis is performed on dedicated hardware, isolated from personal/work systems</li>
-                    <li>Samples are stored encrypted and password-protected</li>
+                    <li>Snapshots in VirtualBox allow instant rollback to clean states</li>
+                    <li>All analysis is performed on dedicated hardware, isolated from university network systems</li>
+                    <li>Samples are stored with stakeholder, Brandon Ellis</li>
+                    <li>Workstation is hosted in a RFID access controlled room (Security Engineering ORTSOC office)</li>
                 </ul>
             </div>
 
@@ -709,7 +710,7 @@
                 </svg>
                 <div>
                     <h3>Legal & Ethical Notice</h3>
-                    <p>This project is strictly for educational and defensive security research. The execution of malware samples is conducted in accordance with applicable laws and regulations. Never attempt to deploy, distribute, or use malware for malicious purposes. Always obtain proper authorization before analyzing suspicious files from third parties.</p>
+                    <p>This project is strictly for educational and defensive security research. The execution of malware samples is conducted in accordance with applicable laws and regulations. Never attempt to deploy, distribute, or use malware for malicious purposes. Always obtain proper authorization before analyzing suspicious files from third parties. We are not responsible for any misuse, application, damages, or distrobution of malware.</p>
                 </div>
             </div>
         </div>
