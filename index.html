@@ -1,70 +1,1154 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MaxBot 🤖</title>
-  <style>
-    body {
-      background-color: #0a0a0a;
-      color: #e5e5e5;
-      font-family: "Inter", "Segoe UI", sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-      padding: 1rem;
-      text-align: center;
-    }
-    h1 {
-      font-size: 3rem;
-      letter-spacing: 1px;
-      color: #00ffcc;
-      margin-bottom: 0.3em;
-    }
-    p {
-      font-size: 1.1rem;
-      color: #bdbdbd;
-      max-width: 500px;
-      line-height: 1.6;
-    }
-    a {
-      color: #00ffcc;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .tag {
-      margin-top: 1rem;
-      font-size: 0.9rem;
-      color: #666;
-    }
-    .compliance {
-      margin-top: 2rem;
-      font-size: 0.8rem;
-      color: #777;
-      max-width: 500px;
-      line-height: 1.4;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SandboxLab - Malware Analysis Sandbox</title>
+    <style>
+        /* ============================================
+           CSS STYLES - Customize colors and spacing here
+           ============================================ */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(to bottom, #111827, #000000);
+            color: #f3f4f6;
+            line-height: 1.6;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: #111827;
+            border-bottom: 1px solid rgba(6, 182, 212, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .navbar-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 64px;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+
+        .navbar-logo {
+            width: 32px;
+            height: 32px;
+            color: #06b6d4;
+        }
+
+        .navbar-menu {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .navbar-menu a {
+            color: #d1d5db;
+            text-decoration: none;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.375rem;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .navbar-menu a:hover,
+        .navbar-menu a.active {
+            color: #06b6d4;
+            background-color: #1f2937;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: #d1d5db;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        /* Main Content Container */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 3rem 1rem;
+        }
+
+        .container-narrow {
+            max-width: 896px;
+            margin: 0 auto;
+            padding: 3rem 1rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 5rem 1rem;
+            background: linear-gradient(to bottom, #111827, #1f2937);
+        }
+
+        .hero-icon {
+            width: 96px;
+            height: 96px;
+            margin: 0 auto 1.5rem;
+            color: #06b6d4;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #9ca3af;
+            max-width: 768px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background-color: #06b6d4;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #0891b2;
+        }
+
+        .btn-secondary {
+            background-color: #374151;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #4b5563;
+        }
+
+        /* Feature Cards */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .feature-card {
+            background-color: #1f2937;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(6, 182, 212, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            color: #06b6d4;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            color: #9ca3af;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background-color: rgba(127, 29, 29, 0.2);
+            border: 1px solid #ef4444;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            align-items: start;
+            margin: 3rem 0;
+        }
+
+        .warning-icon {
+            width: 32px;
+            height: 32px;
+            color: #ef4444;
+            flex-shrink: 0;
+        }
+
+        .warning-box h3 {
+            color: #fca5a5;
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .warning-box p {
+            color: #d1d5db;
+        }
+
+        /* Section Styles */
+        .section {
+            background-color: #1f2937;
+            border-radius: 0.5rem;
+            padding: 2rem;
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            margin-bottom: 2rem;
+        }
+
+        .section h2 {
+            color: #06b6d4;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .section h3 {
+            color: white;
+            font-size: 1.125rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section p {
+            color: #d1d5db;
+            margin-bottom: 1rem;
+        }
+
+        .section ul,
+        .section ol {
+            color: #d1d5db;
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .section li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Video Grid */
+        .video-filters {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            background-color: #1f2937;
+            color: #d1d5db;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background-color: #06b6d4;
+            color: white;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .video-card {
+            background-color: #1f2937;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .video-card:hover {
+            border-color: rgba(6, 182, 212, 0.5);
+            transform: translateY(-4px);
+        }
+
+        .video-thumbnail {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            position: relative;
+        }
+
+        .video-card-body {
+            padding: 1rem;
+        }
+
+        .video-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .badge-malware {
+            background-color: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+        }
+
+        .badge-tools {
+            background-color: rgba(59, 130, 246, 0.2);
+            color: #93c5fd;
+        }
+
+        .video-card h3 {
+            color: white;
+            font-size: 1.125rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .video-card p {
+            color: #9ca3af;
+            font-size: 0.875rem;
+        }
+
+        /* Guide Cards */
+        .guide-card {
+            background-color: #1f2937;
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .guide-card:hover {
+            border-color: rgba(6, 182, 212, 0.5);
+        }
+
+        .guide-header {
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+        }
+
+        .guide-icon {
+            width: 32px;
+            height: 32px;
+            color: #06b6d4;
+            flex-shrink: 0;
+        }
+
+        .guide-header h3 {
+            color: white;
+            font-size: 1.25rem;
+            margin: 0;
+        }
+
+        .guide-header p {
+            color: #9ca3af;
+            font-size: 0.875rem;
+            margin: 0.25rem 0 0 0;
+        }
+
+        .guide-content {
+            padding: 0 1.5rem 1.5rem 4.5rem;
+            display: none;
+        }
+
+        .guide-content.active {
+            display: block;
+        }
+
+        .guide-step {
+            margin-bottom: 1.5rem;
+        }
+
+        .guide-step h4 {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .guide-step p {
+            color: #d1d5db;
+            font-size: 0.875rem;
+        }
+
+        /* Workflow Steps */
+        .workflow-step {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            align-items: start;
+        }
+
+        .step-number {
+            background-color: #06b6d4;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .workflow-step h4 {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .workflow-step p {
+            color: #d1d5db;
+            margin: 0;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #111827;
+            border-top: 1px solid rgba(6, 182, 212, 0.2);
+            margin-top: 5rem;
+        }
+
+        .footer-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 3rem 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p {
+            color: #9ca3af;
+            font-size: 0.875rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: #9ca3af;
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #06b6d4;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #1f2937;
+            padding: 2rem 1rem;
+            text-align: center;
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        /* Page Header */
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar-menu {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-4 {
+            margin-bottom: 2rem;
+        }
+    </style>
 </head>
 <body>
-  <h1>MaxBot</h1>
-  <p>
-    Friendly local AI assistant built by <b>Max Taylor</b>.<br><br>
-    Text me on iMessage → <a href="mailto:maxbot.ai@icloud.com">maxbot.ai@icloud.com</a>
-  </p>
+    <!-- ============================================
+         NAVIGATION BAR
+         ============================================ -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="navbar-brand" onclick="showPage('home'); return false;">
+                <svg class="navbar-logo" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                </svg>
+                <span>SandboxLab</span>
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="#" onclick="showPage('home'); return false;" class="nav-link active" data-page="home">Home</a></li>
+                <li><a href="#" onclick="showPage('about'); return false;" class="nav-link" data-page="about">About</a></li>
+                <li><a href="#" onclick="showPage('videos'); return false;" class="nav-link" data-page="videos">Videos</a></li>
+                <li><a href="#" onclick="showPage('docs'); return false;" class="nav-link" data-page="docs">Documentation</a></li>
+                <li><a href="#" onclick="showPage('guides'); return false;" class="nav-link" data-page="guides">Guides</a></li>
+            </ul>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
 
-  <div class="compliance">
-    <strong>SMS / iMessage Consent Notice</strong><br>
-    By messaging MaxBot, you agree to receive automated AI responses.  
-    Reply <b>STOP</b> at any time to end messages, or <b>HELP</b> for assistance.<br><br>
-    Your number is never shared or sold. Standard carrier rates may apply.
-  </div>
+    <!-- ============================================
+         HOME PAGE
+         ============================================ -->
+    <div id="home-page" class="page active">
+        <!-- Hero Section -->
+        <section class="hero">
+            <svg class="hero-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+            </svg>
+            <h1>Malware Analysis Sandbox</h1>
+            <p>A controlled environment for safe malware analysis, reverse engineering, and security research</p>
+            <div class="hero-buttons">
+                <a href="#" class="btn btn-primary" onclick="showPage('videos'); return false;">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z"></path>
+                    </svg>
+                    Watch Demos
+                </a>
+                <a href="#" class="btn btn-secondary" onclick="showPage('docs'); return false;">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                    </svg>
+                    Documentation
+                </a>
+            </div>
+        </section>
 
-  <div class="tag">⚙️ Running locally — privacy first.</div>
+        <!-- Features Section -->
+        <div class="container">
+            <h2 class="text-center mb-4" style="font-size: 2rem; color: white;">Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    </svg>
+                    <h3>Isolated Environment</h3>
+                    <p>Complete network isolation with virtual networking for safe malware execution</p>
+                </div>
+                <div class="feature-card">
+                    <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                    </svg>
+                    <h3>Analysis Tools</h3>
+                    <p>Pre-configured with FLARE VM, REMnux, and industry-standard analysis tools</p>
+                </div>
+                <div class="feature-card">
+                    <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path>
+                    </svg>
+                    <h3>Automated Logging</h3>
+                    <p>Comprehensive logging of file, registry, and network activity</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Warning Section -->
+        <div class="container-narrow">
+            <div class="warning-box">
+                <svg class="warning-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                </svg>
+                <div>
+                    <h3>Safety Warning</h3>
+                    <p>This sandbox is for educational and research purposes only. Never execute malware on production systems. Always maintain proper isolation and follow cybersecurity best practices.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         ABOUT PAGE
+         ============================================ -->
+    <div id="about-page" class="page">
+        <div class="container-narrow">
+            <div class="page-header">
+                <h1>About the Sandbox</h1>
+            </div>
+
+            <div class="section">
+                <h2>Project Overview</h2>
+                <p>This malware analysis sandbox provides a secure, isolated environment for examining suspicious software, understanding attack vectors, and developing defensive strategies. The system is built using virtualization technology to ensure complete containment of potentially dangerous code.</p>
+                <p>Our goal is to advance malware research while maintaining the highest safety standards and contributing to the broader cybersecurity community through educational content and tool demonstrations.</p>
+            </div>
+
+            <div class="section">
+                <h2>Architecture</h2>
+                <h3>Virtualization Layer</h3>
+                <p>Built on VirtualBox/VMware with snapshotting capabilities for rapid environment restoration</p>
+                
+                <h3>Network Isolation</h3>
+                <p>Completely isolated virtual network with optional internet simulation using INetSim</p>
+                
+                <h3>Analysis VMs</h3>
+                <p>Windows-based FLARE VM for Windows malware and Linux-based REMnux for multi-platform analysis</p>
+                
+                <h3>Monitoring Tools</h3>
+                <p>Process Monitor, Wireshark, API monitoring, and memory forensics tools</p>
+            </div>
+
+            <div class="section">
+                <h2>Safety Protocols</h2>
+                <ul>
+                    <li>All malware samples are executed only in isolated virtual machines</li>
+                    <li>No direct network access to host systems or external networks</li>
+                    <li>Regular snapshots allow instant rollback to clean states</li>
+                    <li>All analysis is performed on dedicated hardware, isolated from personal/work systems</li>
+                    <li>Samples are stored encrypted and password-protected</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <svg class="warning-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                </svg>
+                <div>
+                    <h3>Legal & Ethical Notice</h3>
+                    <p>This project is strictly for educational and defensive security research. The execution of malware samples is conducted in accordance with applicable laws and regulations. Never attempt to deploy, distribute, or use malware for malicious purposes. Always obtain proper authorization before analyzing suspicious files from third parties.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         VIDEOS PAGE
+         ============================================ -->
+    <div id="videos-page" class="page">
+        <div class="container">
+            <div class="page-header">
+                <h1>Video Gallery</h1>
+            </div>
+
+            <!-- Video Filters -->
+            <div class="video-filters">
+                <button class="filter-btn active" onclick="filterVideos('all')">All Videos</button>
+                <button class="filter-btn" onclick="filterVideos('malware')">Malware Analysis</button>
+                <button class="filter-btn" onclick="filterVideos('tools')">Tools & Setup</button>
+            </div>
+
+            <!-- Video Grid -->
+            <div class="video-grid" id="video-grid">
+                <!-- Video cards will be generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         DOCUMENTATION PAGE
+         ============================================ -->
+    <div id="docs-page" class="page">
+        <div class="container-narrow">
+            <div class="page-header">
+                <h1>Documentation</h1>
+            </div>
+
+            <div class="section">
+                <h2>Getting Started</h2>
+                <h3>System Requirements</h3>
+                <ul>
+                    <li>Host system with at least 16GB RAM (32GB recommended)</li>
+                    <li>100GB+ free disk space for VMs and snapshots</li>
+                    <li>Intel VT-x/AMD-V virtualization support enabled in BIOS</li>
+                    <li>VirtualBox 6.1+ or VMware Workstation/Fusion</li>
+                </ul>
+
+                <h3>Initial Setup</h3>
+                <ol>
+                    <li>Download and install your chosen virtualization platform</li>
+                    <li>Create isolated virtual network (Host-Only or Internal)</li>
+                    <li>Deploy FLARE VM (Windows-based analysis)</li>
+                    <li>Deploy REMnux (Linux-based analysis)</li>
+                    <li>Configure snapshot strategy for quick rollback</li>
+                    <li>Test network isolation before executing any samples</li>
+                </ol>
+            </div>
+
+            <div class="section">
+                <h2>Tool Documentation</h2>
+                <h3>FLARE VM</h3>
+                <p>A fully customizable, Windows-based security distribution for malware analysis, incident response, penetration testing, and reverse engineering.</p>
+                
+                <h3>REMnux</h3>
+                <p>A Linux toolkit for reverse-engineering and analyzing malicious software. Includes tools for examining browser-based threats, malicious documents, and more.</p>
+                
+                <h3>Process Monitor</h3>
+                <p>Advanced monitoring tool for Windows that shows real-time file system, registry, and process/thread activity.</p>
+                
+                <h3>Wireshark</h3>
+                <p>Network protocol analyzer for capturing and examining network traffic generated by malware samples.</p>
+            </div>
+
+            <div class="section">
+                <h2>Analysis Workflow</h2>
+                <div class="workflow-step">
+                    <div class="step-number">1</div>
+                    <div>
+                        <h4>Preparation</h4>
+                        <p>Restore VM to clean snapshot, verify network isolation, launch monitoring tools</p>
+                    </div>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">2</div>
+                    <div>
+                        <h4>Static Analysis</h4>
+                        <p>Examine file properties, strings, PE headers, and signatures without execution</p>
+                    </div>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">3</div>
+                    <div>
+                        <h4>Dynamic Analysis</h4>
+                        <p>Execute sample while monitoring system calls, network activity, and behavioral indicators</p>
+                    </div>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">4</div>
+                    <div>
+                        <h4>Documentation</h4>
+                        <p>Record findings, capture screenshots/videos, export logs for further analysis</p>
+                    </div>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">5</div>
+                    <div>
+                        <h4>Cleanup</h4>
+                        <p>Restore VM to clean snapshot, securely store analysis results</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         GUIDES PAGE
+         ============================================ -->
+    <div id="guides-page" class="page">
+        <div class="container-narrow">
+            <div class="page-header">
+                <h1>How-To Guides</h1>
+            </div>
+
+            <!-- Guide 1 -->
+            <div class="guide-card">
+                <div class="guide-header" onclick="toggleGuide(this)">
+                    <svg class="guide-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    <div>
+                        <h3>Setting Up FLARE VM</h3>
+                        <p>Complete guide to installing and configuring FLARE VM</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Guide 2 - Expanded Example -->
+            <div class="guide-card">
+                <div class="guide-header" onclick="toggleGuide(this)">
+                    <svg class="guide-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    <div>
+                        <h3>Configuring Network Isolation</h3>
+                        <p>Step-by-step network setup for safe malware execution</p>
+                    </div>
+                </div>
+                <div class="guide-content active">
+                    <div class="guide-step">
+                        <h4>Step 1: Create Virtual Network</h4>
+                        <p>In VirtualBox, go to File → Host Network Manager. Create a new host-only network with DHCP disabled.</p>
+                    </div>
+                    <div class="guide-step">
+                        <h4>Step 2: Configure VM Network Settings</h4>
+                        <p>Set your analysis VM's network adapter to "Host-only Adapter" and select the network you created.</p>
+                    </div>
+                    <div class="guide-step">
+                        <h4>Step 3: Verify Isolation</h4>
+                        <p>Boot the VM and attempt to ping external addresses. Confirm no external connectivity exists.</p>
+                    </div>
+                    <div class="guide-step">
+                        <h4>Step 4: Optional Internet Simulation</h4>
+                        <p>Install and configure INetSim on a separate VM to simulate internet services for malware that requires connectivity.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Guide 3 -->
+            <div class="guide-card">
+                <div class="guide-header" onclick="toggleGuide(this)">
+                    <svg class="guide-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    <div>
+                        <h3>Basic Static Analysis</h3>
+                        <p>Examining malware without executing it</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Guide 4 -->
+            <div class="guide-card">
+                <div class="guide-header" onclick="toggleGuide(this)">
+                    <svg class="guide-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    <div>
+                        <h3>Capturing Network Traffic</h3>
+                        <p>Using Wireshark to analyze malware communications</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Guide 5 -->
+            <div class="guide-card">
+                <div class="guide-header" onclick="toggleGuide(this)">
+                    <svg class="guide-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    <div>
+                        <h3>Memory Forensics with Volatility</h3>
+                        <p>Analyzing memory dumps for hidden malware artifacts</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Guide 6 -->
+            <div class="guide-card">
+                <div class="guide-header" onclick="toggleGuide(this)">
+                    <svg class="guide-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    <div>
+                        <h3>Safe Sample Handling</h3>
+                        <p>Best practices for storing and transferring malware samples</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         FOOTER
+         ============================================ -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #06b6d4;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                    </svg>
+                    <span style="font-size: 1.125rem; font-weight: bold; color: white;">SandboxLab</span>
+                </div>
+                <p>A secure malware analysis environment for security research and education.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#" onclick="showPage('home'); return false;">Home</a></li>
+                    <li><a href="#" onclick="showPage('about'); return false;">About</a></li>
+                    <li><a href="#" onclick="showPage('videos'); return false;">Videos</a></li>
+                    <li><a href="#" onclick="showPage('docs'); return false;">Documentation</a></li>
+                    <li><a href="#" onclick="showPage('guides'); return false;">Guides</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="https://github.com/mandiant/flare-vm" target="_blank" rel="noopener noreferrer">FLARE VM</a></li>
+                    <li><a href="https://remnux.org/" target="_blank" rel="noopener noreferrer">REMnux</a></li>
+                    <li><a href="https://www.malware-traffic-analysis.net/" target="_blank" rel="noopener noreferrer">Malware Traffic Analysis</a></li>
+                    <li><a href="https://www.virustotal.com/" target="_blank" rel="noopener noreferrer">VirusTotal</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 SandboxLab. For educational and research purposes only.</p>
+        </div>
+    </footer>
+
+    <!-- ============================================
+         JAVASCRIPT - All site functionality
+         ============================================ -->
+    <script>
+        // ====================================
+        // VIDEO DATA - Replace with your real videos
+        // ====================================
+        const videos = [
+            {
+                id: 1,
+                title: 'Ransomware Sample Analysis',
+                category: 'malware',
+                thumbnail: 'https://via.placeholder.com/400x225/1a1a2e/ffffff?text=Ransomware+Analysis',
+                videoUrl: 'https://www.youtube.com/embed/YOUR_VIDEO_ID', // Replace with your video
+                description: 'Analysis of a ransomware specimen showing encryption behavior'
+            },
+            {
+                id: 2,
+                title: 'FLARE VM Tool Demonstration',
+                category: 'tools',
+                thumbnail: 'https://via.placeholder.com/400x225/1a1a2e/ffffff?text=FLARE+VM',
+                videoUrl: 'https://www.youtube.com/embed/YOUR_VIDEO_ID',
+                description: 'Overview of FLARE VM reverse engineering tools'
+            },
+            {
+                id: 3,
+                title: 'Trojan Network Communication',
+                category: 'malware',
+                thumbnail: 'https://via.placeholder.com/400x225/1a1a2e/ffffff?text=Trojan+Network',
+                videoUrl: 'https://www.youtube.com/embed/YOUR_VIDEO_ID',
+                description: 'Capturing C2 communications from a trojan sample'
+            },
+            {
+                id: 4,
+                title: 'REMnux Toolkit Overview',
+                category: 'tools',
+                thumbnail: 'https://via.placeholder.com/400x225/1a1a2e/ffffff?text=REMnux+Tools',
+                videoUrl: 'https://www.youtube.com/embed/YOUR_VIDEO_ID',
+                description: 'Introduction to REMnux malware analysis distribution'
+            },
+            {
+                id: 5,
+                title: 'Worm Propagation Behavior',
+                category: 'malware',
+                thumbnail: 'https://via.placeholder.com/400x225/1a1a2e/ffffff?text=Worm+Analysis',
+                videoUrl: 'https://www.youtube.com/embed/YOUR_VIDEO_ID',
+                description: 'Observing network worm propagation patterns'
+            },
+            {
+                id: 6,
+                title: 'Dynamic Analysis with Process Monitor',
+                category: 'tools',
+                thumbnail: 'https://via.placeholder.com/400x225/1a1a2e/ffffff?text=Process+Monitor',
+                videoUrl: 'https://www.youtube.com/embed/YOUR_VIDEO_ID',
+                description: 'Using Process Monitor for runtime analysis'
+            }
+        ];
+
+        // ====================================
+        // PAGE NAVIGATION
+        // ====================================
+        function showPage(pageName) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+
+            // Show selected page
+            const selectedPage = document.getElementById(pageName + '-page');
+            if (selectedPage) {
+                selectedPage.classList.add('active');
+            }
+
+            // Update navigation active state
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                if (link.getAttribute('data-page') === pageName) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // ====================================
+        // VIDEO FILTERING
+        // ====================================
+        let currentFilter = 'all';
+
+        function filterVideos(category) {
+            currentFilter = category;
+            
+            // Update filter button states
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            filterButtons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Render filtered videos
+            renderVideos();
+        }
+
+        function renderVideos() {
+            const videoGrid = document.getElementById('video-grid');
+            const filteredVideos = currentFilter === 'all' 
+                ? videos 
+                : videos.filter(v => v.category === currentFilter);
+
+            if (filteredVideos.length === 0) {
+                videoGrid.innerHTML = '<p style="text-align: center; color: #9ca3af; grid-column: 1/-1;">No videos found in this category.</p>';
+                return;
+            }
+
+            videoGrid.innerHTML = filteredVideos.map(video => `
+                <div class="video-card" onclick="openVideo('${video.videoUrl}')">
+                    <img src="${video.thumbnail}" alt="${video.title}" class="video-thumbnail">
+                    <div class="video-card-body">
+                        <span class="video-badge ${video.category === 'malware' ? 'badge-malware' : 'badge-tools'}">
+                            ${video.category === 'malware' ? 'Malware' : 'Tools'}
+                        </span>
+                        <h3>${video.title}</h3>
+                        <p>${video.description}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openVideo(videoUrl) {
+            // Open video in new tab or create a modal
+            // For now, just alert - replace with your preferred method
+            if (videoUrl && videoUrl !== '#') {
+                window.open(videoUrl, '_blank');
+            } else {
+                alert('Video URL not configured. Replace the placeholder URL in the JavaScript videos array.');
+            }
+        }
+
+        // ====================================
+        // GUIDE ACCORDION
+        // ====================================
+        function toggleGuide(header) {
+            const guideCard = header.parentElement;
+            const content = guideCard.querySelector('.guide-content');
+            
+            if (content) {
+                content.classList.toggle('active');
+            }
+        }
+
+        // ====================================
+        // INITIALIZE ON PAGE LOAD
+        // ====================================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Render initial videos
+            renderVideos();
+
+            // Mobile menu functionality (basic implementation)
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navbarMenu = document.querySelector('.navbar-menu');
+            
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    navbarMenu.style.display = navbarMenu.style.display === 'flex' ? 'none' : 'flex';
+                    if (navbarMenu.style.display === 'flex') {
+                        navbarMenu.style.flexDirection = 'column';
+                        navbarMenu.style.position = 'absolute';
+                        navbarMenu.style.top = '64px';
+                        navbarMenu.style.left = '0';
+                        navbarMenu.style.right = '0';
+                        navbarMenu.style.backgroundColor = '#111827';
+                        navbarMenu.style.padding = '1rem';
+                        navbarMenu.style.borderTop = '1px solid rgba(6, 182, 212, 0.2)';
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>
