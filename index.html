@@ -6,7 +6,7 @@
     <title>SandboxLab - Malware Analysis Sandbox</title>
     <style>
         /* ============================================
-           CSS STYLES - Customize colors and spacing here
+           CSS STYLES
            ============================================ */
         
         * {
@@ -521,7 +521,7 @@
             color: white;
         }
 
-        /* Responsive Design */
+        /* Responsive stuff */
         @media (max-width: 768px) {
             .navbar-menu {
                 display: none;
@@ -753,18 +753,17 @@
                 <ul>
                     <li>Host system with at least 16GB RAM (32GB recommended)</li>
                     <li>100GB+ free disk space for VMs and snapshots</li>
-                    <li>Intel VT-x/AMD-V virtualization support enabled in BIOS</li>
-                    <li>VirtualBox 6.1+ or VMware Workstation/Fusion</li>
+                    <li>Intel VT-x or AMD-V virtualization support enabled in BIOS</li>
+                    <li>VirtualBox or VMware Workstation</li>
                 </ul>
 
                 <h3>Initial Setup</h3>
                 <ol>
                     <li>Download and install your chosen virtualization platform</li>
-                    <li>Create isolated virtual network (Host-Only or Internal)</li>
-                    <li>Deploy FLARE VM (Windows-based analysis)</li>
-                    <li>Deploy REMnux (Linux-based analysis)</li>
-                    <li>Configure snapshot strategy for quick rollback</li>
-                    <li>Test network isolation before executing any samples</li>
+                    <li>Install FLARE VM (Windows-based analysis) on top of Windows VM</li>
+                    <li>Deploy REMnux (Linux-based analysis) as it's own Ubunutu based VM</li>
+                    <li>Create snapshot of clean base VMs for easy rollback</li>
+                    <li>Disable network hardware and remove ethernet cord</li>
                 </ol>
             </div>
 
@@ -774,7 +773,7 @@
                 <p>A fully customizable, Windows-based security distribution for malware analysis, incident response, penetration testing, and reverse engineering.</p>
                 
                 <h3>REMnux</h3>
-                <p>A Linux toolkit for reverse-engineering and analyzing malicious software. Includes tools for examining browser-based threats, malicious documents, and more.</p>
+                <p>An Ubuntu based Linux toolkit for reverse-engineering and analyzing malicious software. Includes tools for examining browser based threats, malicious documents, and more.</p>
                 
                 <h3>Process Monitor</h3>
                 <p>Advanced monitoring tool for Windows that shows real-time file system, registry, and process/thread activity.</p>
@@ -975,7 +974,7 @@
          ============================================ -->
     <script>
         // ====================================
-        // VIDEO DATA - Replace with your real videos
+        // VIDEO DATA - Replace videoUrl sections with our personal youtube videos. Replace titles of malware with actual malware samples sources from Brandon.
         // ====================================
         const videos = [
             {
@@ -984,7 +983,7 @@
                 category: 'malware',
                 thumbnail: 'https://via.placeholder.com/400x225/1a1a2e/ffffff?text=Ransomware+Analysis',
                 videoUrl: 'https://www.youtube.com/embed/YOUR_VIDEO_ID', // Replace with your video
-                description: 'Analysis of a ransomware specimen showing encryption behavior'
+                description: 'Analysis of a ransomware specimen'
             },
             {
                 id: 2,
@@ -996,17 +995,17 @@
             },
             {
                 id: 3,
-                title: 'Trojan Network Communication',
+                title: 'Adware analysis',
                 category: 'malware',
-                thumbnail: 'https://via.placeholder.com/400x225/1a1a2e/ffffff?text=Trojan+Network',
+                thumbnail: 'https...',
                 videoUrl: 'https://www.youtube.com/embed/YOUR_VIDEO_ID',
-                description: 'Capturing C2 communications from a trojan sample'
+                description: 'Observing behavior and processes of adware'
             },
             {
                 id: 4,
                 title: 'REMnux Toolkit Overview',
                 category: 'tools',
-                thumbnail: 'https://via.placeholder.com/400x225/1a1a2e/ffffff?text=REMnux+Tools',
+                thumbnail: 'https:/',
                 videoUrl: 'https://www.youtube.com/embed/YOUR_VIDEO_ID',
                 description: 'Introduction to REMnux malware analysis distribution'
             },
@@ -1014,17 +1013,33 @@
                 id: 5,
                 title: 'Worm Propagation Behavior',
                 category: 'malware',
-                thumbnail: 'https://via.placeholder.com/400x225/1a1a2e/ffffff?text=Worm+Analysis',
+                thumbnail: 'https://malware.jpg',
                 videoUrl: 'https://www.youtube.com/embed/YOUR_VIDEO_ID',
-                description: 'Observing network worm propagation patterns'
+                description: 'Analyzing network worm propagation patterns'
             },
             {
                 id: 6,
-                title: 'Dynamic Analysis with Process Monitor',
+                title: 'Process Monitor',
                 category: 'tools',
-                thumbnail: 'https://via.placeholder.com/400x225/1a1a2e/ffffff?text=Process+Monitor',
+                thumbnail: 'https...',
                 videoUrl: 'https://www.youtube.com/embed/YOUR_VIDEO_ID',
                 description: 'Using Process Monitor for runtime analysis'
+            },
+            {
+                id: 7,
+                title: 'Fieless malware analysis',
+                category: 'tools',
+                thumbnail: 'https...',
+                videoUrl: 'https://www.youtube.com/embed/YOUR_VIDEO_ID',
+                description: 'Analyze how fileless malware affects RAM usage and hides'
+            },
+            {
+                id: 8,
+                title: 'Keylogger analysis',
+                category: 'malware',
+                thumbnail: 'https...',
+                videoUrl: 'https://www.youtube.com/embed/YOUR_VIDEO_ID',
+                description: 'Analyze how keyloggers track and store keystrokes'
             }
         ];
 
