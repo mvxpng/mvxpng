@@ -1,0 +1,96 @@
+GUIDE SECTION
+    <!-- Guide 1 -->
+    <div class="guide-card">
+        <div class="guide-header" onclick="toggleGuide(this)">
+            <svg class="guide-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+            <div>
+                <h3>Setting Up FLARE VM</h3>
+                <p>Complete guide to installing and configuring FLARE VM</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Guide 2 - Expanded Example -->
+    <div class="guide-card">
+        <div class="guide-header" onclick="toggleGuide(this)">
+            <svg class="guide-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+            <div>
+                <h3>Configuring Network Isolation</h3>
+                <p>Step-by-step network setup for safe malware execution</p>
+            </div>
+        </div>
+        <div class="guide-content active">
+            <div class="guide-step">
+                <h4>Step 1: Create Virtual Network</h4>
+                <p>In VirtualBox, go to File → Host Network Manager. Create a new host-only network with DHCP disabled.</p>
+            </div>
+            <div class="guide-step">
+                <h4>Step 2: Configure VM Network Settings</h4>
+                <p>Set your analysis VM's network adapter to "Host-only Adapter" and select the network you created.</p>
+            </div>
+            <div class="guide-step">
+                <h4>Step 3: Verify Isolation</h4>
+                <p>Boot the VM and attempt to ping external addresses. Confirm no external connectivity exists.</p>
+            </div>
+            <div class="guide-step">
+                <h4>Step 4: Optional Internet Simulation</h4>
+                <p>Install and configure INetSim on a separate VM to simulate internet services for malware that requires connectivity.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Guide 3 -->
+    <div class="guide-card">
+        <div class="guide-header" onclick="toggleGuide(this)">
+            <svg class="guide-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+            <div>
+                <h3>Basic Static Analysis</h3>
+                <p>Examining malware without executing it</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Guide 4 -->
+    <div class="guide-card">
+        <div class="guide-header" onclick="toggleGuide(this)">
+            <svg class="guide-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+            <div>
+                <h3>Capturing Network Traffic</h3>
+                <p>Using Wireshark to analyze malware communications</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Guide 5 -->
+    <div class="guide-card">
+        <div class="guide-header" onclick="toggleGuide(this)">
+            <svg class="guide-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+            <div>
+                <h3>Memory Forensics with Volatility</h3>
+                <p>Analyzing memory dumps for hidden malware artifacts</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Guide 6 -->
+    <div class="guide-card">
+        <div class="guide-header" onclick="toggleGuide(this)">
+            <svg class="guide-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+            <div>
+                <h3>Safe Sample Handling</h3>
+                <p>Best practices for storing and transferring malware samples</p>
+            </div>
+        </div>
+    </div>

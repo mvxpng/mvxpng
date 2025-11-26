@@ -4,572 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Team10 - Malware Analysis Sandbox</title>
-    <style>
-        /* ============================================
-           CSS STYLES
-           ============================================ */
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(to bottom, #111827, #000000);
-            color: #f3f4f6;
-            line-height: 1.6;
-        }
-
-        /* Navigation Bar */
-        .navbar {
-            background-color: #111827;
-            border-bottom: 1px solid rgba(6, 182, 212, 0.2);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .navbar-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 64px;
-        }
-
-        .navbar-brand {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: white;
-            text-decoration: none;
-        }
-
-        .navbar-logo {
-            width: 32px;
-            height: 32px;
-            color: #06b6d4;
-        }
-
-        .navbar-menu {
-            display: flex;
-            gap: 1.5rem;
-            list-style: none;
-        }
-
-        .navbar-menu a {
-            color: #d1d5db;
-            text-decoration: none;
-            padding: 0.5rem 0.75rem;
-            border-radius: 0.375rem;
-            transition: all 0.3s;
-            font-weight: 500;
-        }
-
-        .navbar-menu a:hover,
-        .navbar-menu a.active {
-            color: #06b6d4;
-            background-color: #1f2937;
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: #d1d5db;
-            cursor: pointer;
-            font-size: 1.5rem;
-        }
-
-        /* Main Content Container */
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 3rem 1rem;
-        }
-
-        .container-narrow {
-            max-width: 896px;
-            margin: 0 auto;
-            padding: 3rem 1rem;
-        }
-
-        /* Hero Section */
-        .hero {
-            text-align: center;
-            padding: 5rem 1rem;
-            background: linear-gradient(to bottom, #111827, #1f2937);
-        }
-
-        .hero-icon {
-            width: 96px;
-            height: 96px;
-            margin: 0 auto 1.5rem;
-            color: #06b6d4;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-            color: white;
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            color: #9ca3af;
-            max-width: 768px;
-            margin: 0 auto 2rem;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 0.75rem 2rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-
-        .btn-primary {
-            background-color: #06b6d4;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: #0891b2;
-        }
-
-        .btn-secondary {
-            background-color: #374151;
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background-color: #4b5563;
-        }
-
-        /* Feature Cards */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin: 4rem 0;
-        }
-
-        .feature-card {
-            background-color: #1f2937;
-            padding: 1.5rem;
-            border-radius: 0.5rem;
-            border: 1px solid rgba(6, 182, 212, 0.2);
-            transition: all 0.3s;
-        }
-
-        .feature-card:hover {
-            border-color: rgba(6, 182, 212, 0.5);
-            transform: translateY(-2px);
-        }
-
-        .feature-icon {
-            width: 48px;
-            height: 48px;
-            color: #06b6d4;
-            margin-bottom: 1rem;
-        }
-
-        .feature-card h3 {
-            font-size: 1.25rem;
-            color: white;
-            margin-bottom: 0.5rem;
-        }
-
-        .feature-card p {
-            color: #9ca3af;
-        }
-
-        /* Warning Box */
-        .warning-box {
-            background-color: rgba(127, 29, 29, 0.2);
-            border: 1px solid #ef4444;
-            border-radius: 0.5rem;
-            padding: 1.5rem;
-            display: flex;
-            gap: 1rem;
-            align-items: start;
-            margin: 3rem 0;
-        }
-
-        .warning-icon {
-            width: 32px;
-            height: 32px;
-            color: #ef4444;
-            flex-shrink: 0;
-        }
-
-        .warning-box h3 {
-            color: #fca5a5;
-            font-size: 1.25rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .warning-box p {
-            color: #d1d5db;
-        }
-
-        /* Section Styles */
-        .section {
-            background-color: #1f2937;
-            border-radius: 0.5rem;
-            padding: 2rem;
-            border: 1px solid rgba(6, 182, 212, 0.2);
-            margin-bottom: 2rem;
-        }
-
-        .section h2 {
-            color: #06b6d4;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .section h3 {
-            color: white;
-            font-size: 1.125rem;
-            margin-top: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .section p {
-            color: #d1d5db;
-            margin-bottom: 1rem;
-        }
-
-        .section ul,
-        .section ol {
-            color: #d1d5db;
-            margin-left: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .section li {
-            margin-bottom: 0.5rem;
-        }
-
-        /* Video Grid */
-        .video-filters {
-            display: flex;
-            gap: 0.75rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            padding: 0.5rem 1.5rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            background-color: #1f2937;
-            color: #d1d5db;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .filter-btn:hover,
-        .filter-btn.active {
-            background-color: #06b6d4;
-            color: white;
-        }
-
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .video-card {
-            background-color: #1f2937;
-            border-radius: 0.5rem;
-            overflow: hidden;
-            border: 1px solid rgba(6, 182, 212, 0.2);
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .video-card:hover {
-            border-color: rgba(6, 182, 212, 0.5);
-            transform: translateY(-4px);
-        }
-
-        .video-thumbnail {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            position: relative;
-        }
-
-        .video-card-body {
-            padding: 1rem;
-        }
-
-        .video-badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .badge-malware {
-            background-color: rgba(239, 68, 68, 0.2);
-            color: #fca5a5;
-        }
-
-        .badge-tools {
-            background-color: rgba(59, 130, 246, 0.2);
-            color: #93c5fd;
-        }
-
-        .video-card h3 {
-            color: white;
-            font-size: 1.125rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .video-card p {
-            color: #9ca3af;
-            font-size: 0.875rem;
-        }
-
-        /* Guide Cards */
-        .guide-card {
-            background-color: #1f2937;
-            border: 1px solid rgba(6, 182, 212, 0.2);
-            border-radius: 0.5rem;
-            margin-bottom: 1.5rem;
-            overflow: hidden;
-            transition: all 0.3s;
-        }
-
-        .guide-card:hover {
-            border-color: rgba(6, 182, 212, 0.5);
-        }
-
-        .guide-header {
-            padding: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            cursor: pointer;
-        }
-
-        .guide-icon {
-            width: 32px;
-            height: 32px;
-            color: #06b6d4;
-            flex-shrink: 0;
-        }
-
-        .guide-header h3 {
-            color: white;
-            font-size: 1.25rem;
-            margin: 0;
-        }
-
-        .guide-header p {
-            color: #9ca3af;
-            font-size: 0.875rem;
-            margin: 0.25rem 0 0 0;
-        }
-
-        .guide-content {
-            padding: 0 1.5rem 1.5rem 4.5rem;
-            display: none;
-        }
-
-        .guide-content.active {
-            display: block;
-        }
-
-        .guide-step {
-            margin-bottom: 1.5rem;
-        }
-
-        .guide-step h4 {
-            color: white;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .guide-step p {
-            color: #d1d5db;
-            font-size: 0.875rem;
-        }
-
-        /* Workflow Steps */
-        .workflow-step {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            align-items: start;
-        }
-
-        .step-number {
-            background-color: #06b6d4;
-            color: white;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            flex-shrink: 0;
-        }
-
-        .workflow-step h4 {
-            color: white;
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-
-        .workflow-step p {
-            color: #d1d5db;
-            margin: 0;
-        }
-
-        /* Footer */
-        .footer {
-            background-color: #111827;
-            border-top: 1px solid rgba(6, 182, 212, 0.2);
-            margin-top: 5rem;
-        }
-
-        .footer-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 3rem 1rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .footer-section h3 {
-            color: white;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .footer-section p {
-            color: #9ca3af;
-            font-size: 0.875rem;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-links a {
-            color: #9ca3af;
-            text-decoration: none;
-            font-size: 0.875rem;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: #06b6d4;
-        }
-
-        .footer-bottom {
-            border-top: 1px solid #1f2937;
-            padding: 2rem 1rem;
-            text-align: center;
-            color: #6b7280;
-            font-size: 0.875rem;
-        }
-
-        /* Page Header */
-        .page-header {
-            margin-bottom: 2rem;
-        }
-
-        .page-header h1 {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: white;
-        }
-
-        /* Responsive stuff */
-        @media (max-width: 768px) {
-            .navbar-menu {
-                display: none;
-            }
-
-            .mobile-menu-btn {
-                display: block;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero p {
-                font-size: 1rem;
-            }
-
-            .page-header h1 {
-                font-size: 2rem;
-            }
-
-            .video-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Utility Classes */
-        .hidden {
-            display: none;
-        }
-
-        .page {
-            display: none;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        .mb-4 {
-            margin-bottom: 2rem;
-        }
-    </style>
-</head>
+    <link rel="stylesheet" href="index.css">
 <body>
     <!-- ============================================
          NAVIGATION BAR
@@ -594,7 +29,7 @@
     <!-- ============================================
          HOME PAGE
          ============================================ -->
-    <div id="home-page" class="page active">
+    <div id="home-page" class="page">
         <!-- Hero Section -->
         <section class="hero">
             <svg class="hero-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -692,7 +127,7 @@
 
             <div class="section">
                 <h2>Safety Protocols</h2>
-                <ul>
+                <ul class="guide-step-list">
                     <li>All malware samples are executed only in isolated virtual machines</li>
                     <li>No direct network access to host systems or external networks</li>
                     <li>Snapshots in VirtualBox allow instant rollback to clean states</li>
@@ -825,109 +260,297 @@
     <!-- ============================================
          GUIDES PAGE
          ============================================ -->
-    <div id="guides-page" class="page">
-        <div class="container-narrow">
-            <div class="page-header">
-                <h1>How-To Guides</h1>
-            </div>
+    <div id="guides-page" class="page active">
+    <div class="container-narrow">
+        <div class="page-header">
+            <h1>How-To Guides</h1>
+        </div>
 
-            <!-- Guide 1 -->
-            <div class="guide-card">
-                <div class="guide-header" onclick="toggleGuide(this)">
-                    <svg class="guide-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                    </svg>
-                    <div>
-                        <h3>Setting Up FLARE VM</h3>
-                        <p>Complete guide to installing and configuring FLARE VM</p>
-                    </div>
+        <div class="guide-card">
+            <div class="guide-card-header" onclick="toggleGuide(this)">
+                <div>
+                    <h2>Air-Gapped Malware Sandbox Setup</h2>
+                    <p class="guide-subtitle">Complete guide for configuring an isolated malware analysis environment</p>
                 </div>
             </div>
 
-            <!-- Guide 2 - Expanded Example -->
-            <div class="guide-card">
-                <div class="guide-header" onclick="toggleGuide(this)">
-                    <svg class="guide-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                    </svg>
-                    <div>
-                        <h3>Configuring Network Isolation</h3>
-                        <p>Step-by-step network setup for safe malware execution</p>
+            <div class="guide-card-content">
+                <div class="guide-step">
+                    <div class="guide-step-header" onclick="toggleStep(this)">
+                        <h3>Overview</h3>
+                    </div>
+                    <div class="guide-step-content">
+                        <div class="guide-substep">
+                            <h4>Quick Note</h4>
+                            <p>Our project used an HP Z230 computer. Based on your own hardware, the BIOS-related steps will likely be different.</p>
+                        </div>
+                        <div class="guide-substep">
+                            <h4>Project Description</h4>
+                            <p>This guide walks through the configuration of a malware sandbox on an air-gapped computer. It uses AlmaLinux as the host OS with VirtualBox running two analysis VMs: REMnux (Linux-based) and FlareVM (Windows-based).</p>
+                        </div>
                     </div>
                 </div>
-                <div class="guide-content active">
-                    <div class="guide-step">
-                        <h4>Step 1: Create Virtual Network</h4>
-                        <p>In VirtualBox, go to File → Host Network Manager. Create a new host-only network with DHCP disabled.</p>
-                    </div>
-                    <div class="guide-step">
-                        <h4>Step 2: Configure VM Network Settings</h4>
-                        <p>Set your analysis VM's network adapter to "Host-only Adapter" and select the network you created.</p>
-                    </div>
-                    <div class="guide-step">
-                        <h4>Step 3: Verify Isolation</h4>
-                        <p>Boot the VM and attempt to ping external addresses. Confirm no external connectivity exists.</p>
-                    </div>
-                    <div class="guide-step">
-                        <h4>Step 4: Optional Internet Simulation</h4>
-                        <p>Install and configure INetSim on a separate VM to simulate internet services for malware that requires connectivity.</p>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Guide 3 -->
-            <div class="guide-card">
-                <div class="guide-header" onclick="toggleGuide(this)">
-                    <svg class="guide-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                    </svg>
-                    <div>
-                        <h3>Basic Static Analysis</h3>
-                        <p>Examining malware without executing it</p>
+                <div class="guide-step">
+                    <div class="guide-step-header" onclick="toggleStep(this)">
+                        <h3>Host System Configuration</h3>
+                    </div>
+                    <div class="guide-step-content">
+                        <div class="guide-substep">
+                            <h4>Boot AlmaLinux from USB</h4>
+                            <ol class="guide-step-list">
+                                <li class="guide-step-list-item">Insert USB drive with AlmaLinux</li>
+                                <li class="guide-step-list-item">Press F10 during boot to access boot menu</li>
+                                <li class="guide-step-list-item">Change boot order to boot from USB first</li>
+                                <li class="guide-step-list-item">Boot with AlmaLinux</li>
+                            </ol>
+                        </div>
+                        <div class="guide-substep">
+                            <h4>Install VirtualBox</h4>
+                            <p>Download and install VirtualBox from the Oracle Linux website for Oracle Linux 10/Red Hat Enterprise Linux 10 compatibility.</p>
+                        </div>
+                        <div class="guide-substep">
+                            <h4>Resolving a "VT-x is disabled in the BIOS for all CPU modes" error</h4>
+                            <ol class="guide-step-list">
+                                <li class="guide-step-list-item">Restart the computer and enter BIOS</li>
+                                <li class="guide-step-list-item">Navigate to virtualization settings</li>
+                                <li class="guide-step-list-item">Enable VT-x (Intel) or AMD-V (AMD)</li>
+                                <li class="guide-step-list-item">Save and exit BIOS</li>
+                            </ol>
+                        </div>
+                        <div class="guide-substep">
+                            <h4>Resolving a "VT-x is Being Used by Another Hypervisor" error</h4>
+                            <ol class="guide-step-list">
+                                <li class="guide-step-list-item">
+                                    Create a script to disable conflicting hypervisor services:
+                                </li>
+                                <pre><code>nano /home/[username]/vtfix.sh</code></pre>
+                                <li class="guide-step-list-item">
+                                    Make it executable:
+                                </li>
+                                <pre><code>chmod +x /home/[username]/vtfix.sh</code></pre>
+                                <li class="guide-step-list-item">
+                                    Open crontab:
+                                </li>
+                                <pre><code>sudo crontab -e</code></pre>
+                                <li class="guide-step-list-item">
+                                    Set the script to run on boot:
+                                </li>
+                                <pre><code>@reboot /home/[username]/vtfix.sh</code></pre>
+                            </ol>
+                        </div>
+                        <div class="guide-substep">
+                            <h4>Resolving a "Kernel driver errors (rc=-1908)" error</h4>
+                            <ol class="guide-step-list">
+                                <li class="guide-step-list-item">
+                                    Update your system and install required dependencies:
+                                </li>
+                                <pre><code>sudo dnf update -y && sudo dnf install -y wget kernel-devel kernel-headers gcc make perl elfutils-libelf-devel</code></pre>
+                                <li class="guide-step-list-item">
+                                    To mount USB drives with Windows file systems (loading malware from external storage):
+                                </li>
+                                <pre><code>sudo dnf install exfat-fuse exfat-utils ntfs-3g</code></pre>
+                            </ol>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Guide 4 -->
-            <div class="guide-card">
-                <div class="guide-header" onclick="toggleGuide(this)">
-                    <svg class="guide-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                    </svg>
-                    <div>
-                        <h3>Capturing Network Traffic</h3>
-                        <p>Using Wireshark to analyze malware communications</p>
+                <div class="guide-step">
+                    <div class="guide-step-header" onclick="toggleStep(this)">
+                        <h3>REMnux VM Setup</h3>
+                    </div>
+                    <div class="guide-step-content">
+                        <div class="guide-substep">
+                            <p style="font-style: italic;">NOTE: REMnux is its own pre-configured VM, not a toolkit you install on Ubuntu.</p>
+                        </div>
+                        <div class="guide-substep">
+                            <h4>Download and Import REMnux</h4>
+                            <p>Download:</p>
+                            <ul class="guide-step-list">
+                                <li class="guide-step-list-item">Visit REMnux.org → Navigate to Get REMnux → Download REMnux Virtual Appliance (.ova file)</li>
+                            </ul>
+                            <p>Import into VirtualBox:</p>
+                            <ul class="guide-step-list">
+                                <li class="guide-step-list-item">File → Import Appliance → Select .ova file → Import</li>
+                            </ul>
+                        </div>
+                        <div class="guide-substep">
+                            <h4>Configure REMnux VM</h4>
+                            <p>The VM comes preconfigured with analysis tools. Set default credentials and create a snapshot after successful import.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Guide 5 -->
-            <div class="guide-card">
-                <div class="guide-header" onclick="toggleGuide(this)">
-                    <svg class="guide-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                    </svg>
-                    <div>
-                        <h3>Memory Forensics with Volatility</h3>
-                        <p>Analyzing memory dumps for hidden malware artifacts</p>
+                <div class="guide-step">
+                    <div class="guide-step-header" onclick="toggleStep(this)">
+                        <h3>FlareVM Setup</h3>
+                    </div>
+                    <div class="guide-step-content">
+                        <div class="guide-substep">
+                            <h4>Prepare Windows 10 VM</h4>
+                            <p>Create a Windows 10 VM in VirtualBox with these minimum specifications:</p>
+                            <ul class="guide-step-list">
+                                <li class="guide-step-list-item">System Settings:
+                                    <ul class="guide-step-list">
+                                        <li class="guide-step-list-item">Base Memory: 4096 MB minimum (8 GB preferred)</li>
+                                        <li class="guide-step-list-item">Processors: 2 minimum (4 preferred)</li>
+                                        <li class="guide-step-list-item">Enable PAE/NX</li>
+                                        <li class="guide-step-list-item">Enable Nested VT-x/AMD-V if available</li>
+                                        <li class="guide-step-list-item">Set boot order to hard disk first</li>
+                                    </ul>
+                                </li>
+                                <li class="guide-step-list-item">Storage:
+                                    <ul class="guide-step-list">
+                                        <li class="guide-step-list-item">Allocate at least 60 GB of disk space (FlareVM requires substantial storage)</li>
+                                    </ul>
+                                </li>
+                                <li class="guide-step-list-item">Network:
+                                    <ul class="guide-step-list">
+                                        <li class="guide-step-list-item">Adapter 1: NAT or Bridged (will be disabled later for air-gapping)</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <p>Install Windows 10</p>
+                            <ol class="guide-step-list">
+                                <li class="guide-step-list-item">
+                                    Start the VM and go through the Windows Setup process (may take a little while).
+                                </li>
+                                <li class="guide-step-list-item">
+                                    Connect to the internt during setup to install updates.
+                                </li>
+                                <li class="guide-step-list-item">
+                                    Ensure you have admin rights.
+                                </li>
+                            </ol>
+                        </div>
+                        <div class="guide-substep">
+                            <h4>Disable Windows Defender</h4>
+                            <p>FlareVM requires Windows Defender to be disabled:</p>
+                            <ul class="guide-step-list">
+                                <li class="guide-step-list-item">Go to Windows Settings → Update & Security → Windows Security → Virus & Threat Protection → Manage Settings → Turn off Real-time Protection</li>
+                                <li class="guide-step-list-item">Keep UAC enabled (FlareVM expects it).</li>
+                                <li class="guide-step-list-item">If Windows Defender won't disable through settings, use Group Policy:
+                                    <ul class="guide-step-list">
+                                        <li class="guide-step-list-item">Open Local Group Policy Editor → Computer Configuration → Administrative Templates → Windows Components → Windows Defender Antivirus → Turn off Windows Defender Antivirus → Enabled</li>
+                                        <li class="guide-step-list-item">Run gpupdate /Force and reboot.</li>
+                                        <li class="guide-step-list-item" style="font-style: italic;">NOTE: Having followed these steps, if FlareVM still gives a warning that Windows Defender is not disabled later, proceed with installation anyways.</li> 
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="guide-substep">
+                            Create a snapshot in Virtualbox before proceeding.
+                        </div>
+                        <div class="guide-substep">
+                            <h4>Install FlareVM</h4>
+                            <ol class="guide-step-list">
+                                <li class="guide-step-list-item">Open Powershell as Administrator and change the execution policy:
+                                    <pre><code>Set-ExecutionPolicy Unrestricted -Force</code></pre>
+                                </li>
+                                <li class="guide-step-list-item">Download and run the FlareVM installer:
+                                    <pre><code>Invoke-WebRequest https://raw.githubusercontent.com/mandiant/flare-vm/master/install.ps1 -UseBasicParsing | iex</code></pre>
+                                </li>
+                                <li class="guide-step-list-item">During installation, you can select default options or customize tools (PuTTY and CapeSandbox are two we chose to include).</li>
+                                <li class="guide-step-list-item">The installation process will take considerable time and require multiple reboots. Create a VirtualBox snapshot after successful installation.</li>
+                            </ol>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Guide 6 -->
-            <div class="guide-card">
-                <div class="guide-header" onclick="toggleGuide(this)">
-                    <svg class="guide-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                    </svg>
-                    <div>
-                        <h3>Safe Sample Handling</h3>
-                        <p>Best practices for storing and transferring malware samples</p>
+                <div class="guide-step">
+                    <div class="guide-step-header" onclick="toggleStep(this)">
+                        <h3>Air-Gapping the System</h3>
+                    </div>
+                    <div class="guide-step-content">
+                        <div class="guide-substep">
+                            <h4>Disable Network on Host Machine</h4>
+                            <p>Access BIOS and disable networking.</p>
+                        </div>
+                        <div class="guide-substep">
+                            <h4>Disable Intel AMT (if present)</h4>
+                            <ul class="guide-step-list">
+                                <li class="guide-step-list-item">Press CTRL+P during boot to enter Intel MEBx menu</li>
+                                <li class="guide-step-list-item">Login with admin credentials (default: admin)</li>
+                                <li class="guide-step-list-item">Set/confirm new password: Password123!</li>
+                                <li class="guide-step-list-item">Unconfigure network access</li>
+                                <li class="guide-step-list-item">Go to BIOS → Advanced → Management Operations → AMT → Disabled</li>
+                            </ul>
+                        </div>
+                        <div class="guide-substep">
+                            <h4>Disable Network Controller</h4>
+                            <ul class="guide-step-list">
+                                <li class="guide-step-list-item">BIOS → Security → Device Security → Network Controller → Device Hidden.</li>
+                            </ul>
+                        </div>
+                        <div class="guide-substep">
+                            <p>This ensures the physical machine cannot connect to any network.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="guide-step">
+                    <div class="guide-step-header" onclick="toggleStep(this)">
+                        <h3>Malware Transfer</h3>
+                    </div>
+                    <div class="guide-step-content">
+                        <div class="guide-substep">
+                            <h4>Setting up Shared Folder for REMnux</h4>
+                            <ol class="guide-step-list">
+                                <li class="guide-step-list-item">In VirtualBox, go to VM Settings → Shared Folders → Add Share</li>
+                                <li class="guide-step-list-item">Create a folder on your host.</li>
+                                <li class="guide-step-list-item">Set folder path in VirtualBox to the malware folder location</li>
+                                <li class="guide-step-list-item">Set mount point to desired location on folder on VM (e.g. /home/remnux/Documents/Malware).</li>
+                                <li class="guide-step-list-item">Enable Read-only and Auto-mount.</li>
+                            </ol>
+                        </div>
+                        <div class="guide-substep">
+                            <h4>Setting up Shared Folder for FlareVM:</h4>
+                            <p>FlareVM uses a different approach, direct USB mounting rather than shared folders.</p>
+                            <ol class="guide-step-list">
+                                <li class="guide-step-list-item">
+                                    <p>Install VirtualBox Extension Pack:</p>
+                                    <ol class="guide-step-list">
+                                        <li class="guide-step-list-item">Put the VirtualBox Extension Pack (Oracle VM Extension 7.0.6) on a USB drive</li>
+                                        <li class="guide-step-list-item">Mount the USB on the host system</li>
+                                        <li class="guide-step-list-item">Install the extension pack from the USB</li>
+                                    </ol>
+                                </li>
+                                <li class="guide-step-list-item">
+                                    <p>Configure User Permissions:</p>
+                                    <ol class="guide-step-list">
+                                        <li class="guide-step-list-item">Add your user to the vboxusers group to enable USB passthrough:</li>
+                                        <pre><code>sudo usermod -aG vboxusers team10</code></pre>
+                                        <li class="guide-step-list-item">Restart the system for the group changes to take effect</li>
+                                    </ol>
+                                </li>
+                                <li class="guide-step-list-item">
+                                    <p>Enable USB in FlareVM:</p>
+                                    <ol class="guide-step-list">
+                                        <li class="guide-step-list-item">Open VirtualBox</li>
+                                        <li class="guide-step-list-item">Select the FlareVM virtual machine</li>
+                                        <li class="guide-step-list-item">Go to Settings → USB</li>
+                                        <li class="guide-step-list-item">Set USB controller to USB 3.0</li>
+                                        <li class="guide-step-list-item">Add USB device filters to mount your USB drive</li>
+                                    </ol>
+                                </li>
+                                <p>This allows the FlareVM to access malware samples directly from the USB drive.</p>
+                            </ol>
+                        </div>
+                        <div class="guide-substep">
+                            <h4>Safe Malware Transfer Workflow</h4>
+                            <ol class="guide-step-list">
+                                <li class="guide-step-list-item">Transfer malware files to the VM using the shared folder</li>
+                                <li class="guide-step-list-item">Copy malware from shared folder to a local folder within the VM</li>
+                                <li class="guide-step-list-item">Immediately disable/delete the shared folder in VirtualBox settings</li>
+                                <li class="guide-step-list-item">Now you have complete isolation with no connection between host and VM</li>
+                            </ol>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
     <!-- ============================================
          FOOTER
@@ -971,198 +594,6 @@
     <!-- ============================================
          JAVASCRIPT - All site functionality
          ============================================ -->
-    <script>
-        // ====================================
-        // VIDEO DATA - Replace videoUrl sections with our personal youtube videos. Replace titles of malware with actual malware samples sources from Brandon.
-        // ====================================
-        const videos = [
-            {
-                id: 1,
-                title: 'Ransomware Sample Analysis',
-                category: 'malware',
-                thumbnail: 'https://via.placeholder.com/400x225/1a1a2e/ffffff?text=Ransomware+Analysis',
-                videoUrl: 'https://www.youtube.com/embed/YOUR_VIDEO_ID', // Replace with your video
-                description: 'Analysis of a ransomware specimen'
-            },
-            {
-                id: 2,
-                title: 'FLARE VM Tool Demonstration',
-                category: 'tools',
-                thumbnail: 'https://via.placeholder.com/400x225/1a1a2e/ffffff?text=FLARE+VM',
-                videoUrl: 'https://www.youtube.com/embed/YOUR_VIDEO_ID',
-                description: 'Overview of FLARE VM reverse engineering tools'
-            },
-            {
-                id: 3,
-                title: 'Adware analysis',
-                category: 'malware',
-                thumbnail: 'https...',
-                videoUrl: 'https://www.youtube.com/embed/YOUR_VIDEO_ID',
-                description: 'Observing behavior and processes of adware'
-            },
-            {
-                id: 4,
-                title: 'REMnux Toolkit Overview',
-                category: 'tools',
-                thumbnail: 'https:/',
-                videoUrl: 'https://www.youtube.com/embed/YOUR_VIDEO_ID',
-                description: 'Introduction to REMnux malware analysis distribution'
-            },
-            {
-                id: 5,
-                title: 'Worm Propagation Behavior',
-                category: 'malware',
-                thumbnail: 'https://malware.jpg',
-                videoUrl: 'https://www.youtube.com/embed/YOUR_VIDEO_ID',
-                description: 'Analyzing network worm propagation patterns'
-            },
-            {
-                id: 6,
-                title: 'Process Monitor',
-                category: 'tools',
-                thumbnail: 'https...',
-                videoUrl: 'https://www.youtube.com/embed/YOUR_VIDEO_ID',
-                description: 'Using Process Monitor for runtime analysis'
-            },
-            {
-                id: 7,
-                title: 'Fieless malware analysis',
-                category: 'tools',
-                thumbnail: 'https...',
-                videoUrl: 'https://www.youtube.com/embed/YOUR_VIDEO_ID',
-                description: 'Analyze how fileless malware affects RAM usage and hides'
-            },
-            {
-                id: 8,
-                title: 'Keylogger analysis',
-                category: 'malware',
-                thumbnail: 'https...',
-                videoUrl: 'https://www.youtube.com/embed/YOUR_VIDEO_ID',
-                description: 'Analyze how keyloggers track and store keystrokes'
-            }
-        ];
-
-        // ====================================
-        // PAGE NAVIGATION
-        // ====================================
-        function showPage(pageName) {
-            // Hide all pages
-            const pages = document.querySelectorAll('.page');
-            pages.forEach(page => page.classList.remove('active'));
-
-            // Show selected page
-            const selectedPage = document.getElementById(pageName + '-page');
-            if (selectedPage) {
-                selectedPage.classList.add('active');
-            }
-
-            // Update navigation active state
-            const navLinks = document.querySelectorAll('.nav-link');
-            navLinks.forEach(link => {
-                if (link.getAttribute('data-page') === pageName) {
-                    link.classList.add('active');
-                } else {
-                    link.classList.remove('active');
-                }
-            });
-
-            // Scroll to top
-            window.scrollTo(0, 0);
-        }
-
-        // ====================================
-        // VIDEO FILTERING
-        // ====================================
-        let currentFilter = 'all';
-
-        function filterVideos(category) {
-            currentFilter = category;
-            
-            // Update filter button states
-            const filterButtons = document.querySelectorAll('.filter-btn');
-            filterButtons.forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-
-            // Render filtered videos
-            renderVideos();
-        }
-
-        function renderVideos() {
-            const videoGrid = document.getElementById('video-grid');
-            const filteredVideos = currentFilter === 'all' 
-                ? videos 
-                : videos.filter(v => v.category === currentFilter);
-
-            if (filteredVideos.length === 0) {
-                videoGrid.innerHTML = '<p style="text-align: center; color: #9ca3af; grid-column: 1/-1;">No videos found in this category.</p>';
-                return;
-            }
-
-            videoGrid.innerHTML = filteredVideos.map(video => `
-                <div class="video-card" onclick="openVideo('${video.videoUrl}')">
-                    <img src="${video.thumbnail}" alt="${video.title}" class="video-thumbnail">
-                    <div class="video-card-body">
-                        <span class="video-badge ${video.category === 'malware' ? 'badge-malware' : 'badge-tools'}">
-                            ${video.category === 'malware' ? 'Malware' : 'Tools'}
-                        </span>
-                        <h3>${video.title}</h3>
-                        <p>${video.description}</p>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function openVideo(videoUrl) {
-            // Open video in new tab or create a modal
-            // For now, just alert - replace with your preferred method
-            if (videoUrl && videoUrl !== '#') {
-                window.open(videoUrl, '_blank');
-            } else {
-                alert('Video URL not configured. Replace the placeholder URL in the JavaScript videos array.');
-            }
-        }
-
-        // ====================================
-        // GUIDE ACCORDION
-        // ====================================
-        function toggleGuide(header) {
-            const guideCard = header.parentElement;
-            const content = guideCard.querySelector('.guide-content');
-            
-            if (content) {
-                content.classList.toggle('active');
-            }
-        }
-
-        // ====================================
-        // INITIALIZE ON PAGE LOAD
-        // ====================================
-        document.addEventListener('DOMContentLoaded', function() {
-            // Render initial videos
-            renderVideos();
-
-            // Mobile menu functionality (basic implementation)
-            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-            const navbarMenu = document.querySelector('.navbar-menu');
-            
-            if (mobileMenuBtn) {
-                mobileMenuBtn.addEventListener('click', function() {
-                    navbarMenu.style.display = navbarMenu.style.display === 'flex' ? 'none' : 'flex';
-                    if (navbarMenu.style.display === 'flex') {
-                        navbarMenu.style.flexDirection = 'column';
-                        navbarMenu.style.position = 'absolute';
-                        navbarMenu.style.top = '64px';
-                        navbarMenu.style.left = '0';
-                        navbarMenu.style.right = '0';
-                        navbarMenu.style.backgroundColor = '#111827';
-                        navbarMenu.style.padding = '1rem';
-                        navbarMenu.style.borderTop = '1px solid rgba(6, 182, 212, 0.2)';
-                    }
-                });
-            }
-        });
-    </script>
+    <script src="index.js"></script>
 </body>
 </html>
