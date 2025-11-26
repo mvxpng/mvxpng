@@ -7,7 +7,7 @@ const videos = [
         title: 'About Remnux and FlareVM',
         category: 'tools',
         thumbnail: 'https://img.youtube.com/vi/lRLDl6S9tMQ/maxresdefault.jpg',
-        videoUrl: 'https://www.youtube.com/embed/YOUR_VIDEO_ID', // Replace with your video
+        videoUrl: 'https://youtu.be/lRLDl6S9tMQ',
         description: 'Our video talking about Remnux and FlareVM.'
     },
     {
