@@ -14,7 +14,7 @@ const videos = [
         id: 2,
         title: 'FLARE VM Tool Demonstration',
         category: 'tools',
-        thumbnail: 'https://via.placeholder.com/400x225/1a1a2e/ffffff?text=FLARE+VM',
+        thumbnail: 'https://miro.medium.com/v2/resize:fit:1758/0*auUwP9gXZNr_INr8.png',
         videoUrl: 'https://youtu.be/qA0YcYMRWyI?si=K6T7WeAZ5x81g6be&t=5038',
         description: 'Overview of FLARE VM reverse engineering tools'
     },
