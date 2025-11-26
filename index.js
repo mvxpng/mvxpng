@@ -6,7 +6,7 @@ const videos = [
         id: 1,
         title: 'Ransomware Sample Analysis',
         category: 'malware',
-        thumbnail: 'https://via.placeholder.com/400x225/1a1a2e/ffffff?text=Ransomware+Analysis',
+        thumbnail: 'https://w0.peakpx.com/wallpaper/603/539/HD-wallpaper-malware-hazard-red-gizzzi-hazard-symbol-black-labrano-malware.jpg',
         videoUrl: 'https://www.youtube.com/embed/YOUR_VIDEO_ID', // Replace with your video
         description: 'Analysis of a ransomware specimen'
     },
@@ -15,14 +15,14 @@ const videos = [
         title: 'FLARE VM Tool Demonstration',
         category: 'tools',
         thumbnail: 'https://via.placeholder.com/400x225/1a1a2e/ffffff?text=FLARE+VM',
-        videoUrl: 'https://www.youtube.com/embed/YOUR_VIDEO_ID',
+        videoUrl: 'https://youtu.be/qA0YcYMRWyI?si=K6T7WeAZ5x81g6be&t=5038',
         description: 'Overview of FLARE VM reverse engineering tools'
     },
     {
         id: 3,
         title: 'Adware analysis',
         category: 'malware',
-        thumbnail: 'https...',
+        thumbnail: 'https://w0.peakpx.com/wallpaper/603/539/HD-wallpaper-malware-hazard-red-gizzzi-hazard-symbol-black-labrano-malware.jpg',
         videoUrl: 'https://www.youtube.com/embed/YOUR_VIDEO_ID',
         description: 'Observing behavior and processes of adware'
     },
@@ -30,39 +30,31 @@ const videos = [
         id: 4,
         title: 'REMnux Toolkit Overview',
         category: 'tools',
-        thumbnail: 'https:/',
-        videoUrl: 'https://www.youtube.com/embed/YOUR_VIDEO_ID',
+        thumbnail: 'https://remnux.org/img/remnux-logo.png',
+        videoUrl: 'https://youtu.be/_80fpeY-_AI?si=4Q-7BsShOM5ISe30&t=559',
         description: 'Introduction to REMnux malware analysis distribution'
     },
     {
         id: 5,
-        title: 'Worm Propagation Behavior',
-        category: 'malware',
-        thumbnail: 'https://malware.jpg',
-        videoUrl: 'https://www.youtube.com/embed/YOUR_VIDEO_ID',
-        description: 'Analyzing network worm propagation patterns'
-    },
-    {
-        id: 6,
         title: 'Process Monitor',
         category: 'tools',
-        thumbnail: 'https...',
+        thumbnail: 'https://png.pngtree.com/element_our/sm/20180518/sm_5afec9faea2b6.jpg',
         videoUrl: 'https://www.youtube.com/embed/YOUR_VIDEO_ID',
         description: 'Using Process Monitor for runtime analysis'
     },
     {
-        id: 7,
+        id: 6,
         title: 'Fieless malware analysis',
         category: 'tools',
-        thumbnail: 'https...',
+        thumbnail: 'https://png.pngtree.com/element_our/sm/20180518/sm_5afec9faea2b6.jpg',
         videoUrl: 'https://www.youtube.com/embed/YOUR_VIDEO_ID',
         description: 'Analyze how fileless malware affects RAM usage and hides'
     },
     {
-        id: 8,
+        id: 7,
         title: 'Keylogger analysis',
         category: 'malware',
-        thumbnail: 'https...',
+        thumbnail: 'https://w0.peakpx.com/wallpaper/603/539/HD-wallpaper-malware-hazard-red-gizzzi-hazard-symbol-black-labrano-malware.jpg',
         videoUrl: 'https://www.youtube.com/embed/YOUR_VIDEO_ID',
         description: 'Analyze how keyloggers track and store keystrokes'
     }
