@@ -20,11 +20,11 @@ const videos = [
     },
     {
         id: 3,
-        title: 'Adware analysis',
+        title: 'Formbook.exe Malware Analysis',
         category: 'malware',
-        thumbnail: 'https://w0.peakpx.com/wallpaper/603/539/HD-wallpaper-malware-hazard-red-gizzzi-hazard-symbol-black-labrano-malware.jpg',
-        videoUrl: 'https://www.youtube.com/embed/YOUR_VIDEO_ID',
-        description: 'Observing behavior and processes of adware'
+        thumbnail: 'https://img.youtube.com/vi/6sFojpMDeVo/maxresdefault.jpg',
+        videoUrl: 'https://youtu.be/6sFojpMDeVo',
+        description: 'Observing behavior and processes of Formbook'
     },
     {
         id: 4,
