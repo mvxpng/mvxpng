@@ -4,11 +4,11 @@
 const videos = [
     {
         id: 1,
-        title: 'Ransomware Sample Analysis',
-        category: 'malware',
-        thumbnail: 'https://w0.peakpx.com/wallpaper/603/539/HD-wallpaper-malware-hazard-red-gizzzi-hazard-symbol-black-labrano-malware.jpg',
+        title: 'About Remnux and FlareVM',
+        category: 'tools',
+        thumbnail: 'https://img.youtube.com/vi/lRLDl6S9tMQ/maxresdefault.jpg',
         videoUrl: 'https://www.youtube.com/embed/YOUR_VIDEO_ID', // Replace with your video
-        description: 'Analysis of a ransomware specimen'
+        description: 'Our video talking about Remnux and FlareVM.'
     },
     {
         id: 2,
